@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GerryDanata Training Portal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+  <style>
+    /* === Global Styles === */
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+     
+  background-color: #f5f5f5;
+  padding-top: 80px;
+  padding-bottom: 180px; /* Prevent overlap with fixed footer */
+    }
+
+    /* === Navbar === */
+    .navbar {
+      background: rgb(42, 119, 219);
+      padding: 1rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    }
+
+    .brand-name {
+      color: white;
+      font-size: 1.8rem;
+      font-weight: 600;
+      font-style: italic;
+    }
+
+    .nav-item {
+      color: white;
+      text-decoration: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      transition: 0.3s;
+      font-weight: 500;
+    }
+
+    .nav-item:hover {
+      background: #1557b0;
+    }
+
+    /* === Welcome Section === */
+    .welcome-section {
+      background: white;
+      padding: 60px 30px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      max-width: 800px;
+      margin: 40px auto;
+      border-radius: 15px;
+    }
+
+    .welcome-heading {
+      color: #1a73e8;
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+    }
+
+    .next-button {
+      background: linear-gradient(135deg, #1a73e8, #0d47a1);
+      color: white;
+      border: none;
+      padding: 15px 50px;
+      border-radius: 30px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 5px 15px rgba(26,115,232,0.3);
+    }
+
+    .next-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(26,115,232,0.4);
+    }
+
+    /* === Form === */
+    #editForm {
+      display: none;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 800px;
+      margin: 30px auto;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-top: 5px;
+    }
+
+    .upload-btn {
+      background: #008CBA;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .toggle-form-btn {
+      background: #4CAF50;
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 20px auto;
+      display: block;
+    }
+
+    .preview-section img {
+      display: block;
+      margin: 10px auto;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #008CBA;
+    }
+
+    /* === Trainers Grid === */
+    .trainers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto 50px;
+      padding: 0 20px;
+    }
+
+    .trainer-card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      min-height: 350px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .trainer-photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 15px;
+      border: 3px solid #008CBA;
+    }
+
+    .trainer-info {
+      text-align: center;
+      flex-grow: 1;
+    }
+
+    .trainer-name {
+      color: #2c3e50;
+      font-size: 1.4em;
+      margin-bottom: 10px;
+    }
+
+    .trainer-bio {
+      color: #666;
+      line-height: 1.5;
+      margin-bottom: 15px;
+    }
+
+    .certifications {
+      margin-top: auto;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+    }
+
+    .pdf-item {
+      display: flex;
+      align-items: center;
+      margin: 5px 0;
+      padding: 8px;
+      background: #f8f9fa;
+      border-radius: 5px;
+    }
+
+    .pdf-icon {
+      color: #e74c3c;
+      margin-right: 10px;
+      font-size: 1.2em;
+    }
+
+    .pdf-item a {
+      text-decoration: none;
+      color: #2c3e50;
+    }
+
+    .pdf-item a:hover {
+      text-decoration: underline;
+    }
+
+    /* === Footer === */
+    footer {
+      background: #1a73e8;
+  color: white;
+  padding: 20px 5%;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 999;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .footer-section h4 {
+      margin-bottom: 15px;
+      border-bottom: 2px solid white;
+      padding-bottom: 10px;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    @media (max-width: 768px) {
+      .trainers-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-content {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="brand-name">Gerry's Dnata</div>
+    <a href="#" class="nav-item">HOME</a>
+  </nav>
+
+  <!-- Welcome -->
+  <section class="welcome-section">
+    <h1 class="welcome-heading">WELCOME TO TRAINING DEPARTMENT</h1>
+    <button class="next-button" onclick="showTrainerSection()">NEXT</button>
+  </section>
+
+ <!-- Toggle Add Trainer Form -->
+<button id="addTrainerBtn" class="toggle-form-btn" onclick="toggleForm()">Add New Trainer</button>
+
+
+  <!-- Add/Edit Trainer Form -->
+  <form id="editForm" onsubmit="saveDetails(event)">
+    <div class="form-group">
+      <label>Full Name:</label>
+      <input type="text" id="fullName" required />
+    </div>
+
+    <div class="form-group">
+      <label>About You:</label>
+      <textarea id="aboutYou" rows="4" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Upload Photo:</label>
+      <input type="file" id="photoUpload" accept="image/*" required onchange="previewImage(event)" />
+      <div id="photoPreview" class="preview-section"></div>
+    </div>
+
+    <div class="form-group">
+      <label>Typed Certifications (comma-separated):</label>
+      <input type="text" id="typedCerts" placeholder="e.g., CPR, First Aid, NASM" />
+    </div>
+
+    <div class="form-group">
+      <label>Upload PDF Certifications:</label>
+      <input type="file" id="certifications" accept="application/pdf" multiple />
+    </div>
+
+    <button type="submit" class="upload-btn">Save Trainer</button>
+  </form>
+
+  <!-- Trainer Cards -->
+  <div class="trainers-grid" id="trainersContainer"></div>
+
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>About Us</h4>
+        <p>GerryDanata Training Centre - Jinnah Terminal, Jinnah International Airport, Karachi 75200, Pakistan.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Contact</h4>
+        <p>Email: contact@gerrydanata.com<br>Phone: +92 3268084011</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2023 GerryDanata Training Centre. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+<script>
+  // Initially hide form and button
+  document.getElementById('editForm').style.display = 'none';
+  document.getElementById('addTrainerBtn').style.display = 'none';
+
+  function showTrainerSection() {
+    document.querySelector('.welcome-section').style.display = 'none';
+    document.getElementById('addTrainerBtn').style.display = 'block';
+  }
+
+  function toggleForm() {
+    const form = document.getElementById('editForm');
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    document.getElementById('photoPreview').innerHTML = '';
+    form.reset();
+  }
+
+  function previewImage(event) {
+    const preview = document.getElementById('photoPreview');
+    preview.innerHTML = '';
+
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.className = 'trainer-photo';
+        preview.appendChild(img);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  }
+
+  function saveDetails(event) {
+    event.preventDefault();
+
+    const trainersContainer = document.getElementById('trainersContainer');
+    const photoPreview = document.getElementById('photoPreview').innerHTML;
+    const fullName = document.getElementById('fullName').value;
+    const aboutYou = document.getElementById('aboutYou').value;
+    const typedCerts = document.getElementById('typedCerts').value;
+    const certFiles = Array.from(document.getElementById('certifications').files);
+
+    let certsHTML = '<div class="certifications"><h4>Certifications:</h4>';
+
+    if (typedCerts.trim() !== '') {
+      const certArray = typedCerts.split(',').map(cert => cert.trim()).filter(cert => cert !== '');
+      certArray.forEach(cert => {
+        certsHTML += `<div class="pdf-item"><i class="fas fa-certificate pdf-icon"></i><span>${cert}</span></div>`;
+      });
+    }
+
+    certFiles.forEach(file => {
+      const fileURL = URL.createObjectURL(file);
+      certsHTML += `
+        <div class="pdf-item">
+          <i class="fas fa-file-pdf pdf-icon"></i>
+          <a href="${fileURL}" target="_blank" onclick="event.preventDefault(); window.open('${fileURL}', '_blank', 'width=800,height=600');">${file.name}</a>
+        </div>`;
+    });
+
+    certsHTML += '</div>';
+
+    const card = document.createElement('div');
+    card.className = 'trainer-card';
+    card.innerHTML = `
+      ${photoPreview || '<div class="trainer-photo"></div>'}
+      <div class="trainer-info">
+        <h3 class="trainer-name">${fullName}</h3>
+        <p class="trainer-bio">${aboutYou}</p>
+      </div>
+      ${certsHTML}
+    `;
+
+    trainersContainer.prepend(card);
+    toggleForm();
+  }
+</script>
+
+</body>
+</html>
